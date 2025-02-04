@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt"; // verschlüsselt Passwörter
 import zxcvbn from "zxcvbn"; // bewertet Passwörter
 import jwt from "jsonwebtoken";
-import db from "../config/db";
-import { config } from "../config/config";
+import db from "../config/db.js";
+import { config } from "../config/config.js";
 
 export const register = async (req: Request, res: Response) => {
   const { username, password, passwordConfirmation } = req.body;
@@ -43,8 +43,8 @@ export const register = async (req: Request, res: Response) => {
     return res.status(400).json({ message: "Nutzer existiert bereits!" });
   }
 };
-
-export const login = (req: Request, res: Response) => {
+// das ist sehr schlecht geschreiben, die funktion ist nicht async sondern hat nur async um einen Fehler zu vermeiden
+export const login = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
 
